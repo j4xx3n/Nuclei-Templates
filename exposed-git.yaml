@@ -1,0 +1,21 @@
+---
+id: exposed-git
+info:
+  name: Exposed Git Repository
+  author: j4xx3n
+  severity: info
+  description: Detects exposed Git repositories by checking for the presence of the .git/HEAD file.
+
+http:
+  - method: GET
+    path:
+      - "{{RootURL}}/.git/"
+      - "{{RootURL}}/.git/HEAD"
+    matchers:
+      - type: word
+        words:
+          - "refs/heads/"
+          - "Index of"
+        part: body
+    matchers-condition: or
+... 
