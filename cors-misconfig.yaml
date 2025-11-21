@@ -1,0 +1,24 @@
+---
+id: cors-misconfig-j4xx3n
+info:
+  name: CORS Misconfiguration
+  author: j4xx3n
+  severity: medium
+  description: Detects CORS misconfigurations that allow unauthorized domains to access resources.
+
+http:
+  - method: OPTIONS
+    path: 
+      - "{{BaseURL}}"
+    headers:
+      Origin: "http://evil.com"
+      Access-Control-Request-Method: "GET"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: header
+        words:
+          - "Access-Control-Allow-Origin: http://evil.com"
+          - "Access-Control-Allow-Credentials: true"
+...
